@@ -44,13 +44,14 @@ module.exports = function (options, callback) {
   		, access_type: "offline"
   		, timeout: joi.number().integer().min(1000).default(1000 * 60 * 60 * 20) // 20 minute default
   		, scope: joi.array().includes(joi.string()).min(1).required()
-  		, auto_refresh: joi.boolean().default(true)
+		, auto_refresh: joi.boolean().default(true)
+		, path: joi.string(),
   	}, function (error, options) {
 		if (error) return end(error)
 
 		var port = options.port_from + ((options.port_from - options.port_to) * Math.random() | 0)
 		options.access_type = "offline"
-		options.path = path.join(userDir('.config', options.name), 'token.json')
+		options.path = path || path.join(userDir('.config', options.name), 'token.json')
 		options.return_uri = "http://localhost:" + port
 
 		emit('loading-token', options.path) || console.log('Loading token from ' + options.path)

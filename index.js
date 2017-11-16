@@ -51,7 +51,7 @@ module.exports = function (options, callback) {
 
 		var port = options.port_from + ((options.port_from - options.port_to) * Math.random() | 0)
 		options.access_type = "offline"
-		options.path = path || path.join(userDir('.config', options.name), 'token.json')
+		options.path = options.path || path.join(userDir('.config', options.name), 'token.json')
 		options.return_uri = "http://localhost:" + port
 
 		emit('loading-token', options.path) || console.log('Loading token from ' + options.path)
